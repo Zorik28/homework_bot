@@ -47,7 +47,7 @@ HOMEWORK_STATUSES = {
 
 
 def send_message(bot, message):
-    '''Отправляет сообщение в Telegram чат'''
+    """Отправляет сообщение в Telegram чат"""
     chat_id = TELEGRAM_CHAT_ID
     try:
         bot.send_message(chat_id, message)
@@ -57,7 +57,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    '''Делает запрос к единственному эндпоинту API-сервиса'''
+    """Делает запрос к единственному эндпоинту API-сервиса"""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -71,7 +71,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    '''Проверяет ответ API на корректность'''
+    """Проверяет ответ API на корректность"""
     if type(response['homeworks']) != list:
         raise TypeError('API возвращает не список.')
     if len(response.get('homeworks')) == 0:
@@ -81,7 +81,7 @@ def check_response(response):
 
 
 def parse_status(homeworks):
-    '''Извлекает статус домашней работы'''
+    """Извлекает статус домашней работы"""
     homework_name = homeworks.get('homework_name')
     homework_status = homeworks.get('status')
     if homework_status not in HOMEWORK_STATUSES:
@@ -92,7 +92,7 @@ def parse_status(homeworks):
 
 
 def check_tokens():
-    '''Проверяет доступность переменных окружения'''
+    """Проверяет доступность переменных окружения"""
     if all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]):
         return True
     logging.critical('Проверьте доступность всех токенов')

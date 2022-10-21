@@ -37,7 +37,7 @@ HOMEWORK_STATUSES = {
 
 
 def send_message(bot, message):
-    """Отправляет сообщение в Telegram чат."""
+    """Sends a message to Telegram chat."""
     chat_id = TELEGRAM_CHAT_ID
     try:
         bot.send_message(chat_id, message)
@@ -47,7 +47,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Делает запрос к единственному эндпоинту API-сервиса."""
+    """Makes a request to a single API service endpoint."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -64,7 +64,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Проверяет ответ API на корректность."""
+    """Checks if the API response is correct."""
     if type(response) is not dict:
         raise TypeError('API возвращает не словарь')
     homeworks = response.get('homeworks')
@@ -76,7 +76,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Извлекает статус домашней работы."""
+    """Retrieves the status of homework."""
     if ('homework_name' or 'status') not in homework:
         raise KeyError('Отсутствует ключ homework_name/status')
     homework_name = homework.get('homework_name')
@@ -89,13 +89,13 @@ def parse_status(homework):
 
 
 def check_tokens():
-    """Проверяет доступность переменных окружения."""
+    """Checks the availability of environment variables."""
     if all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]):
         return True
 
 
 def main():
-    """Основная логика работы бота."""
+    """The main bot logic."""
     if not check_tokens():
         logging.critical('Проверьте доступность всех токенов')
         raise PermissionError('Проверьте доступность всех токенов')
